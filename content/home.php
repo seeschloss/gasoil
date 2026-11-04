@@ -35,24 +35,13 @@ foreach ($pleins as $plein) {
   }
 
 
-  if (!$plein->plein) {
-    if ($previous_plein_same_car and $previous_plein_same_car->plein) {
-      $tables[$plein->voiture]->rows[$plein->date."-interval"] = [
-        'cells' => $plein->grid_row_interval($previous_plein_same_car),
-        'attributes' => [
-          'class' => 'interval',
-        ],
-      ];
-    }
-  } else {
-    if ($previous_plein_same_car and $previous_plein_same_car->plein) {
-      $tables[$plein->voiture]->rows[$plein->date."-interval"] = [
-        'cells' => $plein->grid_row_interval($previous_plein_same_car),
-        'attributes' => [
-          'class' => 'interval',
-        ],
-      ];
-    }
+  if ($previous_plein_same_car and ($previous_plein_same_car->plein or $plein->plein)) {
+    $tables[$plein->voiture]->rows[$plein->date."-interval"] = [
+      'cells' => $plein->grid_row_interval($previous_plein_same_car),
+      'attributes' => [
+        'class' => 'interval',
+      ],
+    ];
   }
 
   $tables[$plein->voiture]->rows[$plein->date] = [

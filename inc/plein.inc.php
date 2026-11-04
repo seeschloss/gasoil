@@ -54,27 +54,21 @@ class Plein extends Record {
 			return '-';
 		}
 
-		if (!$this->plein) {
-			$volume = $previous_plein->volume;
-		} else if (!$previous_plein->plein) {
-			$volume = $previous_plein->volume;
-		} else {
-			$volume = $this->volume;
-		}
+		$cycle = $this->cycle();
 
-		return $this->distance_difference() ? Format::number($volume / $this->distance_difference() * 100, 2).' L<i>/100 Km</i>' : "?";
+		$volume = array_sum(array_map(fn($plein) => $plein->volume, $cycle));
+		$distance = array_sum(array_map(fn($plein) => $plein->distance, $cycle));
+
+		return $distance ? Format::number($volume / $distance * 100, 2).' L<i>/100 Km</i>' : "?";
 	}
 
 	function price_distance($previous_plein) {
-		if (!$this->plein) {
-			$volume = $previous_plein->volume;
-		} else if (!$previous_plein->plein) {
-			$volume = $previous_plein->volume;
-		} else {
-			$volume = $this->volume;
-		}
+		$cycle = $this->cycle();
 
-		return $this->distance_difference() ? Format::number($previous_plein->prix * $volume / $this->distance_difference() * 100, 2).' €<i>/100 Km</i>' : "?";
+		$price = array_sum(array_map(fn($plein) => $plein->prix * $plein->volume, $cycle));
+		$distance = array_sum(array_map(fn($plein) => $plein->distance, $cycle));
+
+		return $distance ? Format::number($price / $distance * 100, 2).' €<i>/100 Km</i>' : "?";
 	}
 
 	function formatted_distance_absolue() {
@@ -95,19 +89,20 @@ class Plein extends Record {
 		return $this->distance;
 	}
 
-	function distance_since_last_plein() {
-		$previous_plein_same_car = array_first(Plein::select(['voiture' => $this->voiture, 'plein' => 1, "date < '".$this->date."'"], 'date DESC', 1));
+	function cycle() {
+		$previous_plein = array_first(Plein::select(['voiture' => $this->voiture, 'plein' => 1, "date < '".$this->date."'"], 'date DESC', 1));
 
-		if ($previous_plein_same_car) {
-			$previous_not_pleins = Plein::select(['voiture' => $this->voiture, 'plein' => '0', "date < '".$this->date."'", "date >= '".$previous_plein_same_car->date."'"], 'date DESC');
-			if (count($previous_not_pleins)) {
-				debug::dump($previous_not_pleins);
-			}
+		$conditions = ['voiture' => $this->voiture, "date <= '".$this->date."'"];
 
-			return array_sum(array_map(fn($plein) => $plein->distance, $previous_not_pleins)) + $previous_plein_same_car->distance;
+		if ($previous_plein) {
+			$conditions[] = "date > '".$previous_plein->date."'";
 		}
 
-		return $this->distance;
+		return Plein::select($conditions);
+	}
+
+	function distance_since_last_plein() {
+		return array_sum(array_map(fn($plein) => $plein->distance, $this->cycle()));
 	}
 
 	static function grid_row_header() {
