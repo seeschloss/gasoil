@@ -68,6 +68,12 @@ tr.plein td
 	{
 	}
 
+tr.note td
+	{
+	white-space: pre-wrap;
+	background: #FFE;
+	}
+
 i {
 	font-size: 8px;
 }

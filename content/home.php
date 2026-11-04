@@ -5,6 +5,11 @@ $pleins = match ($voiture) {
   default => Plein::select(['voiture' => $voiture], 'date ASC'),
 };
 
+$notes = match ($voiture) {
+  null, "" => Note::select([], 'date ASC'),
+  default => Note::select(['voiture' => $voiture], 'date ASC'),
+};
+
 $tables = [];
 
 $pleins_per_car = [];
@@ -16,14 +21,28 @@ foreach ($pleins as $plein) {
   $pleins_per_car[$plein->voiture][$plein->date] = $plein;
 }
 
+$entries = array_merge(array_values($pleins), array_values($notes));
+usort($entries, fn($a, $b) => strtotime($a->date) <=> strtotime($b->date));
+
 $previous_plein = null;
-foreach ($pleins as $plein) {
+foreach ($entries as $plein) {
   if (!isset($tables[$plein->voiture])) {
     $tables[$plein->voiture] = new Html_Table();
     $tables[$plein->voiture]->title = $plein->voiture;
     $tables[$plein->voiture]->filters = Plein::filters();
     $tables[$plein->voiture]->header = Plein::grid_row_header();
     $tables[$plein->voiture]->rows = [];
+  }
+
+  if ($plein instanceof Note) {
+    $tables[$plein->voiture]->rows[$plein->date."-note-".$plein->id] = [
+      'cells' => $plein->grid_row(count($tables[$plein->voiture]->header)),
+      'attributes' => [
+        'class' => 'note',
+      ],
+    ];
+
+    continue;
   }
 
   $previous_plein_same_car = null;

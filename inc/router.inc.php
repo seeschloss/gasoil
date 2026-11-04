@@ -16,6 +16,7 @@ class Router {
 		$this->routes = [
 			'/' => [$this, 'show_home'],
 			'/plein' => [$this, 'show_plein'],
+			'/note' => [$this, 'show_note'],
 			'/(.+)' => [$this, 'show_home'],
 		];
 
@@ -33,7 +34,7 @@ class Router {
 		$uri = str_replace("/?", "/", $uri);
 		$uri = strtok($uri, '?');
 
-		if (strpos($uri, '/plein') === 0) {
+		if (strpos($uri, '/plein') === 0 or strpos($uri, '/note') === 0) {
 			$this->auth_admin($uri);
 		} else if (strpos($uri, '/data') === 0) {
 			$this->auth_api();
@@ -128,6 +129,23 @@ HTML;
 		$plein = new Plein();
 
 		$this->theme->content_env = ['plein' => $plein];
+
+		if ($this->json) {
+			header('Content-Type: application/json;charset=UTF-8');
+			print $this->theme->bare();
+		} else {
+			print $this->theme->html();
+		}
+
+		return true;
+	}
+
+	public function show_note($parts, $get, $post) {
+		$this->theme->content_file = 'note.php';
+
+		$note = new Note();
+
+		$this->theme->content_env = ['note' => $note];
 
 		if ($this->json) {
 			header('Content-Type: application/json;charset=UTF-8');

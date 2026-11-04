@@ -15,6 +15,13 @@ class DB {
 				updated INTEGER,
 				created INTEGER
 			);',
+			'notes' => 'CREATE TABLE notes (
+				id INTEGER PRIMARY KEY,
+				date TIMESTAMP,
+				distance_absolue FLOAT,
+				note TEXT,
+				voiture TEXT
+			);',
 		];
 	}
 
