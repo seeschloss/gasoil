@@ -33,6 +33,7 @@ class Note extends Record {
 
 		$fields = [
 			'date' => $db->escape($this->date),
+			'distance_absolue' => (int)$this->distance_absolue,
 			'note' => $db->escape($this->note),
 			'voiture' => $db->escape($this->voiture),
 		];
@@ -51,6 +52,7 @@ class Note extends Record {
 
 		$fields = [
 			'date' => $db->escape($this->date),
+			'distance_absolue' => (int)$this->distance_absolue,
 			'note' => $db->escape($this->note),
 			'voiture' => $db->escape($this->voiture),
 		];
@@ -106,6 +108,13 @@ class Note extends Record {
 			$form->fields['voiture_Picasso']->attributes = ['checked' => "checked"];
 		}
 
+		$form->fields['distance_absolue'] = new HTML_Input("note-distance-absolue");
+		$form->fields['distance_absolue']->type = "number";
+		$form->fields['distance_absolue']->name = "note[distance_absolue]";
+		$form->fields['distance_absolue']->attributes['step'] = "1";
+		$form->fields['distance_absolue']->value = (int)$this->distance_absolue;
+		$form->fields['distance_absolue']->label = __("Distance (absolute)");
+
 		$form->fields['note'] = new HTML_Textarea("note-note");
 		$form->fields['note']->name = "note[note]";
 		$form->fields['note']->value = htmlspecialchars($this->note);
@@ -146,6 +155,10 @@ class Note extends Record {
 
 		if (isset($data['voiture'])) {
 			$this->voiture = $data['voiture'];
+		}
+
+		if (isset($data['distance_absolue'])) {
+			$this->distance_absolue = (int)$data['distance_absolue'];
 		}
 
 		if (isset($data['note'])) {

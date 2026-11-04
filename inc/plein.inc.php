@@ -362,8 +362,14 @@ JS;
 			$this->distance = (float)$data['distance'];
 		}
 
-		if (isset($data['distance-absolue'])) {
+		if (!empty($data['distance-absolue']) and $data['distance-absolue'] > 0) {
 			$this->distance_absolue = (int)$data['distance-absolue'];
+		} else {
+			$last_plein = Plein::select(['voiture' => $this->voiture], 'date DESC');
+			if ($last_plein && $last_plein[0]->distance_absolue > 0) {
+				$this->distance_absolue = $last_plein[0]->distance_absolue + $this->distance;
+				$this->distance_absolue_calculated = true;
+			}
 		}
 
 		if (isset($data['prix'])) {
