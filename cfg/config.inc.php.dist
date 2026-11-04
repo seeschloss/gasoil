@@ -1,0 +1,14 @@
+<?php // vim: set ft=php noexpandtab sw=4 sts=4 ts=4
+
+$config = [
+	'title' => 'Stats de consommation',
+	'base_path' => '',
+	'logging' => [
+		'directory' => __DIR__.'/../app-logs/',
+	],
+	'database' => [
+		'dsn' => 'sqlite:'.__DIR__.'/../db/petrole.db',
+	],
+	'contact' => 'contact@example.com',
+];
+

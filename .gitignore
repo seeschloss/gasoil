@@ -1,0 +1,11 @@
+app-logs/*
+cfg/config.inc.php
+cfg/htpasswd
+logs/*
+photos/*
+db/*.db
+data/*
+www/.well-known
+*.swp
+www/*.webm
+www/*.jpg

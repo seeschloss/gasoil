@@ -1,0 +1,30 @@
+<?php
+
+$__['Address: %s'] = "Adres: %s";
+$__['Alert confirmation for Antwerp parking bans'] = "Confirmation d'alerte pour les interdictions de stationnement à Anvers";
+$__['Bans in this area at the moment:'] = "Interdictions actives dans cette zone :";
+$__['Email address'] = "E-mailadres";
+$__['From'] = "Vanaf";
+$__['From:'] = "Vanaf:";
+$__['Hours: %s'] = "Tijden: %s";
+$__['Latitude'] = "Breedtegraad";
+$__['Latitude: %s'] = "Breedtegraad: %s";
+$__['Link: %s'] = "Link: %s";
+$__['Location'] = "Locatie";
+$__['Location: %s'] = "Locatie : %s";
+$__['Longitude'] = "Lengtegraad";
+$__['Longitude: %s'] = "Lengtegraad : %s";
+$__['New parking bans in Antwerp'] = "Nouvelles interdictions de stationner à Anvers";
+$__['New parking bans:'] = "Nouvelles interdictions de stationner :";
+$__['No ban in this area at the moment.'] = "Pas d'interdiction dans cette zone en ce moment.";
+$__['Reason: %s'] = "Motivatie: %s";
+$__['Send your remarks or enquiries to %s'] = "Envoyez vos remarques ou demandes à %s";
+$__['Set an alert'] = "Recevoir une alerte";
+$__['The alert will be valid from %s to %s, you can set a new one afterwards if you want.'] = "L'alerte sera valable du %s au %s, vous pourrez en créer une nouvelle par la suite si vous le souhaitez.";
+$__['To'] = "Tot";
+$__['To:'] = "Tot:";
+$__['You can cancel this alert at the following address;'] = "Vous pouvez supprimer cette alerte à l'adresse suivante :";
+$__['You can see these details and cancel this alert at the following address:'] = "Vous pouvez voir ces détails et supprimer cette alerte à l'adresse suivante :";
+$__['You just setup an alert for receiving a notification for new parking bans in Antwerp at the following location:'] = "Vous venez de mettre en place une alerte pour recevoir une notification pour les nouvelles interdictions de stationnement à Anvers à l'emplacement suivant :";
+$__['You will receive a confirmation email with a link that allows you to cancel this alert. If you do not cancel it, the alert will be active for one week.'] = "Vous recevrez un email de confirmation contenant un lien pour vous permettre de supprimer l'alerte. Si vous ne la supprimez pas, l'alerte sera active pendant une semaine.";
+$__['Cancel this alert'] = "Supprimer cette alerte";

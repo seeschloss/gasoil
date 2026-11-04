@@ -1,0 +1,30 @@
+<?php
+
+$__['Address: %s'] = "Address: %s";
+$__['Alert confirmation for Antwerp parking bans'] = "Alert confirmation for Antwerp parking bans";
+$__['Bans in this area at the moment:'] = "Bans in this area at the moment:";
+$__['Email address'] = "Email address";
+$__['From'] = "From";
+$__['From:'] = "From:";
+$__['Hours: %s'] = "Hours: %s";
+$__['Latitude'] = "Latitude";
+$__['Latitude: %s'] = "Latitude: %s";
+$__['Link: %s'] = "Link: %s";
+$__['Location'] = "Location";
+$__['Location: %s'] = "Location: %s";
+$__['Longitude'] = "Longitude";
+$__['Longitude: %s'] = "Longitude: %s";
+$__['New parking bans in Antwerp'] = "New parking bans in Antwerp";
+$__['New parking bans:'] = "New parking bans:";
+$__['No ban in this area at the moment.'] = "No ban in this area at the moment.";
+$__['Reason: %s'] = "Reason: %s";
+$__['Send your remarks or enquiries to %s'] = "Send your remarks or enquiries to %s";
+$__['Set an alert'] = "Set an alert";
+$__['The alert will be valid from %s to %s, you can set a new one afterwards if you want.'] = "The alert will be valid from %s to %s, you can set a new one afterwards if you want.";
+$__['To'] = "To";
+$__['To:'] = "To:";
+$__['You can cancel this alert at the following address;'] = "You can cancel this alert at the following address;";
+$__['You can see these details and cancel this alert at the following address:'] = "You can see these details and cancel this alert at the following address:";
+$__['You just setup an alert for receiving a notification for new parking bans in Antwerp at the following location:'] = "You just setup an alert for receiving a notification for new parking bans in Antwerp at the following location:";
+$__['You will receive a confirmation email with a link that allows you to cancel this alert. If you do not cancel it, the alert will be active for one week.'] = "You will receive a confirmation email with a link that allows you to cancel this alert. If you do not cancel it, the alert will be active for one week.";
+$__['Cancel this alert'] = "Cancel this alert";

@@ -1,0 +1,106 @@
+body
+	{
+	font-family:	monospace;
+	}
+
+#content
+	{
+	display: grid;
+	grid-template: auto / 50%;
+	grid-gap: 1ex;
+	padding: 1ex;
+	}
+
+ul
+	{
+	width :		50%;
+	}
+
+table
+	{
+	border:		1px solid black;
+	padding:	1ex;
+	border-collapse: collapse;
+	width :		100%;
+	}
+
+td
+	{
+	white-space: nowrap;
+	line-height: 50%;
+	padding: 2px;
+	}
+
+tr:last-child td
+	{
+		padding-bottom: 5px;
+	}
+
+th:not(:last-child), td:not(:last-child)
+	{
+	border-right: 1px solid #CCC;
+	}
+
+tr > td ~ td,
+tr > th ~ th
+	{
+	text-align: right;
+	}
+
+.title
+	{
+	margin-top:	0;
+	border-bottom:	1px solid black;
+	width:		20em;
+	}
+
+th
+	{
+	text-align:	left;
+	}
+
+tr.interval td
+	{
+		background: #EEE;
+	}
+
+tr.plein td
+	{
+	}
+
+i {
+	font-size: 8px;
+}
+
+dl
+	{
+	font-size: 22px;
+	}
+
+form.dl-form input, form.dl-form button
+	{
+	font-size: 24px;
+	width: 100%;
+	margin-bottom: 2ex;
+	line-height: 150%;
+	padding: 10px;
+	box-sizing: border-box;
+	}
+
+dt#field-plein-voiture-C4, dt#field-plein-voiture-Picasso,
+dt#field-plein-voiture-C4 + dd, dt#field-plein-voiture-Picasso + dd
+	{
+	margin-left: 0;
+	display: inline;
+	}
+
+dt#field-plein-voiture-C4 + dd, dt#field-plein-voiture-Picasso + dd
+	{
+	margin-right: 1em;
+	font-size: 24px;
+	}
+
+dt#field-plein-voiture-C4 + dd input, dt#field-plein-voiture-Picasso + dd input
+	{
+	width: auto;
+	}
