@@ -28,7 +28,22 @@ class Update {
 			self::to_6();
 		}
 
+		if ($db->query('SELECT distance_absolue_calculated FROM pleins')) {
+			self::to_7();
+		}
+
 		echo "All done.\n";
+	}
+
+	static function to_7() {
+		echo "7. Remove `distance_absolue_calculated` from table `pleins`\n";
+
+		$db = new DB();
+		$db->query('UPDATE pleins SET distance_absolue = NULL WHERE distance_absolue_calculated = 1');
+		$db->query('ALTER TABLE pleins DROP COLUMN distance_absolue_calculated');
+		if ($db->error()) {
+			print $db->error()."\n";
+		}
 	}
 
 	static function to_6() {

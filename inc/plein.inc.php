@@ -8,7 +8,6 @@ class Plein extends Record {
 	public $volume = 0;
 	public $distance = 0;
 	public $distance_absolue = 0;
-	public $distance_absolue_calculated = false;
 	public $prix = 0;
 	public $voiture = "";
 	public $fuel = "";
@@ -72,15 +71,58 @@ class Plein extends Record {
 	}
 
 	function formatted_distance_absolue() {
-		return ($this->distance_absolue_calculated ? '*' : '').Format::number($this->distance_absolue, 0).' Km';
+		return ($this->distance_absolue > 0 ? '' : '*').Format::number($this->calculated_distance_absolue(), 0).' Km';
+	}
+
+	function calculated_distance_absolue() {
+		if ($this->distance_absolue > 0) {
+			return $this->distance_absolue;
+		}
+
+		$previous_plein = array_first(Plein::select([
+			'voiture' => $this->voiture,
+			"date < '".$this->date."'",
+			"distance_absolue > 0",
+		], 'date DESC', 1));
+
+		if ($previous_plein) {
+			$pleins_since = Plein::select([
+				'voiture' => $this->voiture,
+				"date > '".$previous_plein->date."'",
+				"date <= '".$this->date."'",
+			]);
+
+			return $previous_plein->distance_absolue + array_sum(array_map(fn($plein) => $plein->distance, $pleins_since));
+		}
+
+		$next_plein = array_first(Plein::select([
+			'voiture' => $this->voiture,
+			"date > '".$this->date."'",
+			"distance_absolue > 0",
+		], 'date ASC', 1));
+
+		if ($next_plein) {
+			$pleins_until = Plein::select([
+				'voiture' => $this->voiture,
+				"date > '".$this->date."'",
+				"date <= '".$next_plein->date."'",
+			]);
+
+			return $next_plein->distance_absolue - array_sum(array_map(fn($plein) => $plein->distance, $pleins_until));
+		}
+
+		return 0;
 	}
 
 	function distance_difference() {
 		$previous_plein_same_car = array_first(Plein::select(['voiture' => $this->voiture, "date < '".$this->date."'"], 'date DESC', 1));
 
 		if ($previous_plein_same_car) {
-			if ($previous_plein_same_car->distance_absolue > 0 and $this->distance_absolue > 0) {
-				return $this->distance_absolue - $previous_plein_same_car->distance_absolue;
+			$previous_distance_absolue = $previous_plein_same_car->calculated_distance_absolue();
+			$distance_absolue = $this->calculated_distance_absolue();
+
+			if ($previous_distance_absolue > 0 and $distance_absolue > 0) {
+				return $distance_absolue - $previous_distance_absolue;
 			} else {
 				return $this->distance;
 			}
@@ -178,7 +220,6 @@ class Plein extends Record {
 			'volume' => (float)$this->volume,
 			'distance' => (float)$this->distance,
 			'distance_absolue' => (int)$this->distance_absolue,
-			'distance_absolue_calculated' => (int)$this->distance_absolue_calculated,
 			'prix' => (float)$this->prix,
 			'voiture' => $db->escape($this->voiture),
 			'fuel' => $db->escape($this->fuel),
@@ -205,7 +246,6 @@ class Plein extends Record {
 			'volume' => (float)$this->volume,
 			'distance' => (float)$this->distance,
 			'distance_absolue' => (int)$this->distance_absolue,
-			'distance_absolue_calculated' => (int)$this->distance_absolue_calculated,
 			'prix' => (float)$this->prix,
 			'voiture' => $db->escape($this->voiture),
 			'fuel' => $db->escape($this->fuel),
@@ -365,11 +405,7 @@ JS;
 		if (!empty($data['distance-absolue']) and $data['distance-absolue'] > 0) {
 			$this->distance_absolue = (int)$data['distance-absolue'];
 		} else {
-			$last_plein = Plein::select(['voiture' => $this->voiture], 'date DESC');
-			if ($last_plein && $last_plein[0]->distance_absolue > 0) {
-				$this->distance_absolue = $last_plein[0]->distance_absolue + $this->distance;
-				$this->distance_absolue_calculated = true;
-			}
+			$this->distance_absolue = 0;
 		}
 
 		if (isset($data['prix'])) {
