@@ -70,15 +70,6 @@ foreach ($entries as $plein) {
     ],
   ];
 
-
-  /*
-  $tables[$plein->voiture]->rows[] = [
-    'cells' => $plein->grid_row_single($previous_plein_same_car),
-    'attributes' => [
-      'class' => 'plein',
-    ],
-  ];
-   */
   $previous_plein = $plein;
 };
 

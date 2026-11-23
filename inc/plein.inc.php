@@ -154,6 +154,7 @@ class Plein extends Record {
 			'volume' => __('Volume'),
 			'montant' => __('Amount'),
 			'prix' => __('Price'),
+			'type' => __('Fuel'),
 			'conso' => __('Conso'),
 			'price-distance' => __('Price/distance'),
 		];
@@ -170,6 +171,7 @@ class Plein extends Record {
 					'attributes' => ['title' => $this->station],
 				],
 				'prix' => $this->prix(),
+				'type' => $this->fuel,
 				'conso' => "",
 				'price-distance' => "",
 			];
@@ -187,6 +189,7 @@ class Plein extends Record {
 				'volume' => "",
 				'montant' => "",
 				'prix' => "",
+				'type' => "",
 				'conso' => $this->conso($previous),
 				'price-distance' => $previous ? $this->price_distance($previous) : "-",
 			];
